@@ -1,0 +1,232 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+}
+
+body, html {
+  background-color: #1b1d1b;
+}
+
+.game-board {
+  width: calc(min(90%, 500px));
+  aspect-ratio: 5/6;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 6 auto;
+      grid-template-rows: 6 auto;
+  -ms-grid-columns: 5 auto;
+      grid-template-columns: 5 auto;
+  gap: 10px;
+}
+
+.game-board .rows {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+  height: 100%;
+  width: 100%;
+}
+
+.game-board .rows .tiles {
+  width: 100%;
+  aspect-ratio: 1/1;
+  list-style-type: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-transform: uppercase;
+  font-size: calc(clamp(2em, 10vw, 4em));
+  border: 0.05em solid #2d2e2d;
+  -webkit-transition: background-color 1s, border 1s;
+  transition: background-color 1s, border 1s;
+}
+
+.game-board .rows :nth-child(1) {
+  -webkit-transition-delay: 0s;
+          transition-delay: 0s;
+}
+
+.game-board .rows :nth-child(2) {
+  -webkit-transition-delay: 0.5s;
+          transition-delay: 0.5s;
+}
+
+.game-board .rows :nth-child(3) {
+  -webkit-transition-delay: 1s;
+          transition-delay: 1s;
+}
+
+.game-board .rows :nth-child(4) {
+  -webkit-transition-delay: 1.5s;
+          transition-delay: 1.5s;
+}
+
+.game-board .rows :nth-child(5) {
+  -webkit-transition-delay: 2s;
+          transition-delay: 2s;
+}
+
+.enter-reload {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+  width: calc(min(90%, 500px));
+}
+
+.enter-reload input[type="text"] {
+  height: 0px;
+  border: 0;
+}
+
+.enter-reload input[type="text"]:focus {
+  outline: none;
+}
+
+.enter-reload div {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 25px;
+}
+
+.enter-reload div button {
+  height: 50px;
+  font-size: 2em;
+  background-color: #3b8530;
+  border: none;
+  text-transform: uppercase;
+}
+
+.enter-reload div button:hover {
+  cursor: pointer;
+  background-color: #4e9643;
+}
+
+.enter-reload div button:focus {
+  outline: none;
+}
+
+.enter-reload div :first-child {
+  width: calc(100% - 100px);
+}
+
+.enter-reload div :last-child {
+  width: 75px;
+  font-weight: bold;
+  font-family: Lucida Sans Unicode;
+}
+
+.popup {
+  width: 300px;
+  height: 200px;
+  background-color: #4c4d4c;
+  border: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.popup::before {
+  content: "";
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+}
+
+.popup span {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.popup h3 {
+  position: absolute;
+  top: 35px;
+  font-size: 2.5em;
+  text-transform: uppercase;
+}
+
+.popup button {
+  position: absolute;
+  height: 50px;
+  width: 80%;
+  bottom: 35px;
+  font-size: 2em;
+  background-color: #3b8530;
+  border: none;
+  text-transform: uppercase;
+}
+
+.popup button:hover {
+  cursor: pointer;
+  background-color: #4e9643;
+}
+
+.popup button:focus {
+  outline: none;
+}
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+/*# sourceMappingURL=App.css.map */
