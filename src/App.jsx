@@ -1,11 +1,13 @@
 import './styles/App.css';
 import { useState, useRef, useEffect } from 'react'
+import { dictionary } from './words';
 
 function App() {
 
   
   const [word, setWord] = useState([])
   const [guessValue, setGuessValue] = useState("")
+  const [pastGuesses, setPastGuesses] = useState([])
   const [currentRow, setCurrentRow] = useState(0)
   const [rows, setRows] = useState([[], [], [], [], [], []])
   const tiles = ["", "", "", "", ""]
@@ -13,22 +15,18 @@ function App() {
   const [newWord, setNewWord] = useState(true)
   const [popup, setPopup] = useState(false)
   const [noType, setNoType] = useState(false)
+  const [answer, setAnswer] = useState("")
 
   const guessRef = useRef("")
 
 
   useEffect (() => {
-    const fetchWord = async () => {
-      const wordFetch = await fetch("https://salty-citadel-43385.herokuapp.com/https://api.frontendexpert.io/api/fe/wordle-words")
-      const wordList = await wordFetch.json()
-      const chosenWord = await wordList[Math.floor(Math.random() * wordList.length)]
-      const wordSplit = chosenWord.split("")
-      setWord([...wordSplit])
-      console.log(chosenWord)
-      }
-    fetchWord()
+    const chosenWord =  dictionary[Math.floor(Math.random() * dictionary.length)]
+    const wordSplit = chosenWord.toUpperCase().split("")
+    setWord([...wordSplit])
+    setAnswer(chosenWord.toUpperCase())
     guessRef.current.focus()
- 
+    console.log(wordSplit)
   }, [newWord])
 
   const handleWon = () => {
@@ -47,11 +45,50 @@ function App() {
    setPopup(() => false)
   }
 
+  const styleSquares = (tempTiles) => {
+    const currentTiles = document.querySelectorAll(`#row${currentRow}`)
+    for (let i = 0; i < 5; i++) {
+      currentTiles[i].style.backgroundColor = "hsl(120, 1%, 18%)";
+      currentTiles[i].style.border = "0.05em solid hsl(120, 1%, 18%)";
+      currentTiles[i].style.color = "white";
+    }
+    for (let i = 0; i < 5; i++) {
+      for (let t = 0; t < 5; t++) {
+        if (tempTiles[currentRow][i] === word[t]) {
+          currentTiles[i].style.backgroundColor = "rgb(181, 186, 49)";
+          currentTiles[i].style.border = "0.05em solid rgb(181, 186, 49)";
+        } 
+      }
+      if (tempTiles[currentRow][i] === word[i]) {
+        currentTiles[i].style.backgroundColor = "rgb(59, 133, 48)";
+        currentTiles[i].style.border = "0.05em solid rgb(59, 133, 48)";
+      }  
+    }
+  }
+
+  const isPastGuesses = (dictionaryIdx) => {
+    let guessArray = pastGuesses
+    const pastGuessIdx = guessArray.indexOf(dictionaryIdx)
+      if (pastGuessIdx > -1) {
+        return true
+      } else {
+        guessArray.push(dictionaryIdx)
+        setPastGuesses([...guessArray])
+        return false
+      }
+  }
+
   const sendGuess = (e) => {
     e.preventDefault()
-    let tempGuess = guessValue
-    let guess = tempGuess.toUpperCase()
-    let tempTiles = rows
+    const dictionaryIdx = dictionary.indexOf(guessValue)
+    if (dictionaryIdx === -1) {
+      return
+    }
+    if (isPastGuesses(dictionaryIdx)) {
+      return
+    }
+    let guess = guessValue.toUpperCase()
+    let tempTiles = [...rows]
     if (currentRow === 5) {
       setTimeout(() => {
         handleLost()
@@ -66,25 +103,7 @@ function App() {
       setGuessValue(() => "")
 
       //add styles to buttons
-      const currentTiles = document.querySelectorAll(`#row${currentRow}`)
-      for (let i = 0; i < 5; i++) {
-        currentTiles[i].style.backgroundColor = "hsl(120, 1%, 18%)";
-        currentTiles[i].style.border = "0.05em solid hsl(120, 1%, 18%)";
-        currentTiles[i].style.color = "white";
-      }
-      for (let i = 0; i < 5; i++) {
-        for (let t = 0; t < 5; t++) {
-          if (tempTiles[currentRow][i] === word[t]) {
-            currentTiles[i].style.backgroundColor = "rgb(181, 186, 49)";
-            currentTiles[i].style.border = "0.05em solid rgb(181, 186, 49)";
-          } 
-        }
-        if (tempTiles[currentRow][i] === word[i]) {
-          currentTiles[i].style.backgroundColor = "rgb(59, 133, 48)";
-          currentTiles[i].style.border = "0.05em solid rgb(59, 133, 48)";
-        }  
-      }
-      
+      styleSquares(tempTiles)
       //check for finish
       let guessString = tempTiles[currentRow].toString()
       let wordString = word.toString()
@@ -145,6 +164,7 @@ function App() {
       <form className='popup'>
         <span onClick={closeModal}>X</span>
         <h3>{finished}</h3>
+        {finished === "Game Over" && <h4>The answer was "{answer}"</h4>}
         <button onClick={handlePlayAgain}>PLAY AGAIN</button>
       </form>}
     </div>

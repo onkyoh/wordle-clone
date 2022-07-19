@@ -156,10 +156,9 @@ body, html {
 
 .popup {
   width: 300px;
-  height: 200px;
+  height: 300px;
   background-color: #4c4d4c;
   border: none;
-  position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -177,6 +176,7 @@ body, html {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: absolute;
 }
 
 .popup::before {
@@ -197,13 +197,29 @@ body, html {
 
 .popup h3 {
   position: absolute;
-  top: 35px;
+  top: 25%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
   font-size: 2.5em;
+  text-transform: uppercase;
+}
+
+.popup h4 {
+  position: absolute;
+  top: 50%;
+  width: 275px;
+  text-align: center;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  font-size: 1.5em;
   text-transform: uppercase;
 }
 
 .popup button {
   position: absolute;
+  top: 75%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
   height: 50px;
   width: 80%;
   bottom: 35px;
